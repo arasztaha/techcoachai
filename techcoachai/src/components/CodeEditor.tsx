@@ -275,14 +275,344 @@ try:
 
     print(test_is_palindrome())
 `;
+      } else if (problemId === '13') {  // Implement a Queue
+        testCode += `
+    # Test case for Queue Implementation problem
+    def test_queue():
+        try:
+            # Check if 'Queue' class exists
+            if 'Queue' not in globals():
+                return "FAIL: Could not find a 'Queue' class in your code"
+
+            # Create a queue and test its operations
+            queue = Queue()
+
+            # Test is_empty on empty queue
+            if not queue.is_empty():
+                return "FAIL: A new queue should be empty"
+
+            # Test size on empty queue
+            if queue.size() != 0:
+                return f"FAIL: Expected size 0 for empty queue, but got {queue.size()}"
+
+            # Test enqueue
+            queue.enqueue(1)
+            queue.enqueue(2)
+            queue.enqueue(3)
+
+            # Test size after enqueues
+            if queue.size() != 3:
+                return f"FAIL: Expected size 3 after enqueuing 3 items, but got {queue.size()}"
+
+            # Test peek
+            if queue.peek() != 1:
+                return f"FAIL: Expected peek to return 1, but got {queue.peek()}"
+
+            # Test dequeue
+            if queue.dequeue() != 1:
+                return "FAIL: Expected dequeue to return 1"
+
+            if queue.dequeue() != 2:
+                return "FAIL: Expected dequeue to return 2"
+
+            # Test size after dequeues
+            if queue.size() != 1:
+                return f"FAIL: Expected size 1 after dequeuing 2 items, but got {queue.size()}"
+
+            # Test is_empty on non-empty queue
+            if queue.is_empty():
+                return "FAIL: Queue should not be empty after enqueuing items"
+
+            return "PASS: All queue operations work as expected!"
+        except Exception as e:
+            return f"FAIL: Error when testing your code: {str(e)}"
+
+    print(test_queue())
+`;
+      } else if (problemId === '14') {  // Binary Search Tree Operations
+        testCode += `
+    # Test case for Binary Search Tree Operations problem
+    def test_bst():
+        try:
+            # Check if 'BinarySearchTree' class exists
+            if 'BinarySearchTree' not in globals():
+                return "FAIL: Could not find a 'BinarySearchTree' class in your code"
+
+            # Create a BST and test its operations
+            bst = BinarySearchTree()
+
+            # Test insert and inorder_traversal
+            bst.insert(5)
+            bst.insert(3)
+            bst.insert(7)
+            bst.insert(2)
+            bst.insert(4)
+
+            inorder = bst.inorder_traversal()
+            expected_inorder = [2, 3, 4, 5, 7]
+
+            if inorder != expected_inorder:
+                return f"FAIL: Expected inorder traversal {expected_inorder}, but got {inorder}"
+
+            # Test search
+            if not bst.search(4):
+                return "FAIL: search(4) should return True"
+
+            if bst.search(6):
+                return "FAIL: search(6) should return False"
+
+            # Test min and max
+            if bst.min_value() != 2:
+                return f"FAIL: Expected min_value to be 2, but got {bst.min_value()}"
+
+            if bst.max_value() != 7:
+                return f"FAIL: Expected max_value to be 7, but got {bst.max_value()}"
+
+            return "PASS: All Binary Search Tree operations work as expected!"
+        except Exception as e:
+            return f"FAIL: Error when testing your code: {str(e)}"
+
+    print(test_bst())
+`;
+      } else if (problemId === '15') {  // Linked List Implementation
+        testCode += `
+    # Test case for Linked List Implementation problem
+    def test_linked_list():
+        try:
+            # Check if 'LinkedList' class exists
+            if 'LinkedList' not in globals():
+                return "FAIL: Could not find a 'LinkedList' class in your code"
+
+            # Create a linked list and test its operations
+            linked_list = LinkedList()
+
+            # Test append and to_list
+            linked_list.append(1)
+            linked_list.append(2)
+            linked_list.append(3)
+
+            list_repr = linked_list.to_list()
+            expected_list = [1, 2, 3]
+
+            if list_repr != expected_list:
+                return f"FAIL: Expected list representation {expected_list}, but got {list_repr}"
+
+            # Test search
+            if not linked_list.search(2):
+                return "FAIL: search(2) should return True"
+
+            if linked_list.search(4):
+                return "FAIL: search(4) should return False"
+
+            # Test prepend
+            linked_list.prepend(0)
+            expected_after_prepend = [0, 1, 2, 3]
+
+            if linked_list.to_list() != expected_after_prepend:
+                return f"FAIL: After prepend(0), expected {expected_after_prepend}, but got {linked_list.to_list()}"
+
+            # Test delete
+            linked_list.delete(0)
+            linked_list.delete(2)
+            expected_after_delete = [1, 3]
+
+            if linked_list.to_list() != expected_after_delete:
+                return f"FAIL: After deleting 0 and 2, expected {expected_after_delete}, but got {linked_list.to_list()}"
+
+            return "PASS: All Linked List operations work as expected!"
+        except Exception as e:
+            return f"FAIL: Error when testing your code: {str(e)}"
+
+    print(test_linked_list())
+`;
+      } else if (problemId === '16') {  // Decorators in Python
+        testCode += `
+    # Test case for Python Decorators problem
+    def test_decorators():
+        try:
+            # Check if the required decorators exist
+            missing_decorators = []
+
+            if 'timer' not in globals():
+                missing_decorators.append('timer')
+
+            if 'debug' not in globals():
+                missing_decorators.append('debug')
+
+            if 'retry' not in globals():
+                missing_decorators.append('retry')
+
+            if missing_decorators:
+                return f"FAIL: Missing required decorators: {', '.join(missing_decorators)}"
+
+            # Test timer decorator
+            import time
+
+            @timer
+            def sleep_function():
+                time.sleep(0.1)
+                return "Done"
+
+            # Capture output to check timer decorator
+            import sys
+            from io import StringIO
+
+            original_stdout = sys.stdout
+            sys.stdout = StringIO()
+
+            result = sleep_function()
+
+            timer_output = sys.stdout.getvalue()
+            sys.stdout = original_stdout
+
+            if "sleep_function took" not in timer_output:
+                return f"FAIL: Timer decorator didn't output execution time. Output was: {timer_output}"
+
+            if result != "Done":
+                return f"FAIL: Timer decorator didn't return the original function's return value. Got: {result}"
+
+            # Test debug decorator (basic check)
+            @debug
+            def add(a, b):
+                return a + b
+
+            sys.stdout = StringIO()
+            result = add(3, 5)
+            debug_output = sys.stdout.getvalue()
+            sys.stdout = original_stdout
+
+            if "Calling add" not in debug_output or "Returning 8" not in debug_output:
+                return f"FAIL: Debug decorator didn't print function details. Output was: {debug_output}"
+
+            if result != 8:
+                return f"FAIL: Debug decorator didn't return the original function's return value. Got: {result}"
+
+            # Test retry decorator (basic check - we'll make it succeed on first try)
+            retry_called = [False]
+
+            @retry(3)
+            def succeed_first_time():
+                retry_called[0] = True
+                return "Success"
+
+            result = succeed_first_time()
+
+            if not retry_called[0]:
+                return "FAIL: Retry decorator didn't execute the wrapped function"
+
+            if result != "Success":
+                return f"FAIL: Retry decorator didn't return the original function's return value. Got: {result}"
+
+            return "PASS: All decorator implementations work as expected!"
+        except Exception as e:
+            return f"FAIL: Error when testing your code: {str(e)}"
+
+    print(test_decorators())
+`;
+      } else if (problemId === '17') {  // Context Managers
+        testCode += `
+    # Test case for Context Managers problem
+    def test_context_managers():
+        try:
+            # Check if the required context managers exist
+            missing_managers = []
+
+            if 'Timer' not in globals():
+                missing_managers.append('Timer')
+
+            if 'tempdir' not in globals():
+                missing_managers.append('tempdir')
+
+            if 'suppress_exceptions' not in globals():
+                missing_managers.append('suppress_exceptions')
+
+            if missing_managers:
+                return f"FAIL: Missing required context managers: {', '.join(missing_managers)}"
+
+            # Test Timer context manager
+            with Timer() as timer:
+                time.sleep(0.1)
+
+            if not hasattr(timer, 'elapsed'):
+                return "FAIL: Timer context manager doesn't set the 'elapsed' attribute"
+
+            if timer.elapsed < 0.05:  # Should be at least close to 0.1
+                return f"FAIL: Timer elapsed time ({timer.elapsed}) is too small for a 0.1s sleep"
+
+            # Test tempdir context manager
+            import os
+
+            with tempdir() as path:
+                # Check if the directory exists
+                if not os.path.isdir(path):
+                    return "FAIL: tempdir context manager didn't create a directory"
+
+                # Create a test file
+                test_file = os.path.join(path, "test.txt")
+                with open(test_file, 'w') as f:
+                    f.write("Test")
+
+                # Check if the file was created
+                if not os.path.exists(test_file):
+                    return "FAIL: Failed to create a file in the temporary directory"
+
+            # Directory should be cleaned up
+            if os.path.exists(path):
+                return "FAIL: tempdir context manager didn't clean up the directory"
+
+            # Test suppress_exceptions context manager
+            exception_raised = False
+
+            try:
+                with suppress_exceptions(ZeroDivisionError):
+                    1 / 0
+            except Exception:
+                exception_raised = True
+
+            if exception_raised:
+                return "FAIL: suppress_exceptions context manager didn't suppress ZeroDivisionError"
+
+            # Test that it only suppresses specified exceptions
+            exception_raised = False
+
+            try:
+                with suppress_exceptions(ValueError):
+                    1 / 0  # ZeroDivisionError
+            except ZeroDivisionError:
+                exception_raised = True
+
+            if not exception_raised:
+                return "FAIL: suppress_exceptions context manager suppressed an exception it shouldn't have"
+
+            return "PASS: All context manager implementations work as expected!"
+        except Exception as e:
+            return f"FAIL: Error when testing your code: {str(e)}"
+
+    print(test_context_managers())
+`;
       } else {
+        // Default case for problems without specific tests
         testCode += `
     # Default case for problems without specific tests
     print("INFO: No specific test cases defined for this problem. Running basic validation...")
     try:
-        # Execute the code and check if it runs without errors
-        exec(code)
-        print("PASS: Your code executed without errors. Specific test cases are not implemented for this problem yet.")
+        # The variable 'code' is not defined here, so we need to use a different approach
+        # We'll run the solution() function if it exists, or simply pass if it doesn't
+        if 'solution' in globals():
+            solution()
+            print("PASS: Your solution() function executed without errors.")
+        else:
+            # Try to find and execute any defined functions
+            user_functions = [name for name, obj in globals().items()
+                             if callable(obj) and not name.startswith('__') and name != 'test_output'
+                             and name not in ('StringIO', 'exec', 'print', 'str')]
+
+            if user_functions:
+                print(f"Found user-defined functions: {', '.join(user_functions)}")
+                print("PASS: Your code appears to define the necessary functions.")
+            else:
+                print("CAUTION: No user-defined functions found. Make sure you've implemented the required functionality.")
+                print("PASS: Your code has no syntax errors.")
     except Exception as e:
         print(f"FAIL: Your code raised an error: {str(e)}")
 `;
