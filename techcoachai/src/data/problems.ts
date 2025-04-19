@@ -278,7 +278,77 @@ print(count_vowels("PYTHON"))
 print(count_vowels("rhythm"))`
     }
   },
+  // New problem added
+  {
+    id: '18',
+    title: 'String Manipulation - Word Counter',
+    slug: 'word-counter',
+    difficulty: 'Medium',
+    category: 'Python Basics',
+    categoryEmoji: '🐍',
+    description: 'Write a function `word_count(text)` that counts the frequency of each word in a given text.\n\nThe function should return a dictionary where keys are the words and values are the number of occurrences of that word in the text.\n\nWords should be case-insensitive (e.g., "Hello" and "hello" should be counted as the same word). Punctuation should be ignored.',
+    examples: [
+      {
+        input: 'word_count("Hello world, hello Python!")',
+        output: '{"hello": 2, "world": 1, "python": 1}',
+        explanation: 'The word "hello" appears twice (case-insensitive), while "world" and "python" each appear once'
+      },
+      {
+        input: 'word_count("The quick brown fox jumps over the lazy dog.")',
+        output: '{"the": 2, "quick": 1, "brown": 1, "fox": 1, "jumps": 1, "over": 1, "lazy": 1, "dog": 1}',
+        explanation: 'The word "the" appears twice, all other words appear once'
+      }
+    ],
+    constraints: [
+      'Input text will contain only ASCII characters',
+      'Words are separated by spaces or punctuation',
+      'Return the result as a dictionary with words in lowercase'
+    ],
+    hints: [
+      'You can use the lower() method to convert text to lowercase',
+      'The re module can be used to remove punctuation',
+      'Consider using a defaultdict or Counter from the collections module'
+    ],
+    solution: {
+      explanation: 'We first convert the input text to lowercase and use a regular expression to remove punctuation. Then we split the text into words and count the frequency of each word using a dictionary.',
+      code: `import re
+from collections import Counter
 
+def word_count(text):
+    # Convert to lowercase
+    text = text.lower()
+
+    # Remove punctuation and replace with spaces
+    text = re.sub(r'[^\\w\\s]', ' ', text)
+
+    # Split into words and count
+    words = text.split()
+    return dict(Counter(words))
+
+# Alternative implementation without Counter
+def word_count_alt(text):
+    # Convert to lowercase
+    text = text.lower()
+
+    # Remove punctuation and replace with spaces
+    text = re.sub(r'[^\\w\\s]', ' ', text)
+
+    # Split into words
+    words = text.split()
+
+    # Count occurrences
+    word_counts = {}
+    for word in words:
+        word_counts[word] = word_counts.get(word, 0) + 1
+
+    return word_counts
+
+# Test cases
+print(word_count("Hello world, hello Python!"))
+print(word_count("The quick brown fox jumps over the lazy dog."))`
+    }
+  },
+  // End of new problem
   // Algorithms
   {
     id: '7',
@@ -467,6 +537,57 @@ print(gcd(56, 98))
 print(gcd(17, 23))
 print(gcd(0, 5))
 print(gcd(48, 18))`
+    }
+  },
+  {
+    id: '19',
+    title: 'Tower of Hanoi',
+    slug: 'tower-of-hanoi',
+    difficulty: 'Hard',
+    category: 'Algorithms',
+    categoryEmoji: '🧮',
+    description: 'Implement a function `hanoi(n, source, auxiliary, target)` that solves the Tower of Hanoi puzzle.\n\nThe Tower of Hanoi is a classic puzzle with three rods and n disks of different sizes. The objective is to move the entire stack of disks from the source rod to the target rod, following these rules:\n\n1. Only one disk can be moved at a time\n2. Each move consists of taking the upper disk from one of the stacks and placing it on top of another stack or on an empty rod\n3. No disk may be placed on top of a smaller disk\n\nYour function should print each step of the solution in the format "Move disk [disk_number] from [source] to [target]".',
+    examples: [
+      {
+        input: 'hanoi(3, "A", "B", "C")',
+        output: `"Move disk 1 from A to C"
+"Move disk 2 from A to B"
+"Move disk 1 from C to B"
+"Move disk 3 from A to C"
+"Move disk 1 from B to A"
+"Move disk 2 from B to C"
+"Move disk 1 from A to C"`,
+        explanation: 'The steps required to move 3 disks from rod A to rod C using rod B as auxiliary'
+      }
+    ],
+    constraints: [
+      'n will be a positive integer',
+      'source, auxiliary, and target will be strings representing the rod names'
+    ],
+    hints: [
+      'This is a classic problem that can be solved recursively',
+      'To move n disks from source to target, you need to: 1) move n-1 disks from source to auxiliary, 2) move disk n from source to target, 3) move n-1 disks from auxiliary to target',
+      'The base case is when n = 1, where you simply move the disk from source to target'
+    ],
+    solution: {
+      explanation: 'We solve the Tower of Hanoi puzzle using recursion. For n disks, we first move n-1 disks from the source to the auxiliary rod, then move the nth disk from the source to the target, and finally move the n-1 disks from the auxiliary rod to the target.',
+      code: `def hanoi(n, source, auxiliary, target):
+    # Base case: if only one disk, move it directly
+    if n == 1:
+        print(f"Move disk 1 from {source} to {target}")
+        return
+
+    # Move n-1 disks from source to auxiliary, using target as temporary
+    hanoi(n-1, source, target, auxiliary)
+
+    # Move the nth disk from source to target
+    print(f"Move disk {n} from {source} to {target}")
+
+    # Move n-1 disks from auxiliary to target, using source as temporary
+    hanoi(n-1, auxiliary, source, target)
+
+# Test case
+hanoi(3, "A", "B", "C")`
     }
   },
 
@@ -1276,7 +1397,279 @@ with suppress_exceptions(ZeroDivisionError, ValueError):
     result = 1 / 0
 print("Execution continues despite the zero division error")`
     }
-  }
+  },
+
+  // New problem added
+  {
+    id: '20',
+    title: 'Matrix Operations',
+    slug: 'matrix-operations',
+    difficulty: 'Medium',
+    category: 'Math',
+    categoryEmoji: '📊',
+    description: 'Implement functions to perform basic matrix operations:\n\n1. `matrix_add(A, B)`: Add two matrices A and B\n2. `matrix_multiply(A, B)`: Multiply two matrices A and B\n3. `matrix_transpose(A)`: Find the transpose of matrix A\n\nA matrix is represented as a list of lists, where each inner list is a row of the matrix.',
+    examples: [
+      {
+        input: `A = [[1, 2], [3, 4]]
+B = [[5, 6], [7, 8]]
+matrix_add(A, B)`,
+        output: '[[6, 8], [10, 12]]',
+        explanation: 'Adding corresponding elements of matrices A and B'
+      },
+      {
+        input: `A = [[1, 2], [3, 4]]
+B = [[5, 6], [7, 8]]
+matrix_multiply(A, B)`,
+        output: '[[19, 22], [43, 50]]',
+        explanation: '(1×5 + 2×7 = 19, 1×6 + 2×8 = 22), (3×5 + 4×7 = 43, 3×6 + 4×8 = 50)'
+      },
+      {
+        input: `A = [[1, 2, 3], [4, 5, 6]]
+matrix_transpose(A)`,
+        output: '[[1, 4], [2, 5], [3, 6]]',
+        explanation: 'The transpose swaps rows and columns'
+      }
+    ],
+    constraints: [
+      'For matrix_add, matrices A and B must have the same dimensions',
+      'For matrix_multiply, the number of columns in A must equal the number of rows in B',
+      'All matrix elements will be integers'
+    ],
+    hints: [
+      'Matrix addition is element-wise: C[i][j] = A[i][j] + B[i][j]',
+      'For matrix multiplication, C[i][j] = sum(A[i][k] * B[k][j]) for all k',
+      'For transpose, the element at position (i, j) in the original matrix becomes the element at position (j, i) in the transposed matrix'
+    ],
+    solution: {
+      explanation: 'We implement three matrix operations: addition, multiplication, and transpose. Matrix addition adds corresponding elements. Matrix multiplication follows the definition of matrix product. The transpose swaps the rows and columns of the matrix.',
+      code: `def matrix_add(A, B):
+    # Check if dimensions match
+    if len(A) != len(B) or len(A[0]) != len(B[0]):
+        raise ValueError("Matrices must have the same dimensions for addition")
+
+    # Initialize result matrix with zeros
+    result = [[0 for _ in range(len(A[0]))] for _ in range(len(A))]
+
+    # Add corresponding elements
+    for i in range(len(A)):
+        for j in range(len(A[0])):
+            result[i][j] = A[i][j] + B[i][j]
+
+    return result
+
+def matrix_multiply(A, B):
+    # Check if dimensions are compatible for multiplication
+    if len(A[0]) != len(B):
+        raise ValueError("Number of columns in A must equal number of rows in B")
+
+    # Initialize result matrix with zeros
+    result = [[0 for _ in range(len(B[0]))] for _ in range(len(A))]
+
+    # Multiply
+    for i in range(len(A)):
+        for j in range(len(B[0])):
+            for k in range(len(B)):
+                result[i][j] += A[i][k] * B[k][j]
+
+    return result
+
+def matrix_transpose(A):
+    # Initialize transposed matrix
+    result = [[0 for _ in range(len(A))] for _ in range(len(A[0]))]
+
+    # Fill in the transposed values
+    for i in range(len(A)):
+        for j in range(len(A[0])):
+            result[j][i] = A[i][j]
+
+    return result
+
+# Test cases
+A = [[1, 2], [3, 4]]
+B = [[5, 6], [7, 8]]
+
+print("Matrix A + B:")
+print(matrix_add(A, B))
+
+print("Matrix A × B:")
+print(matrix_multiply(A, B))
+
+print("Transpose of matrix A:")
+print(matrix_transpose(A))`
+    }
+  },
+
+  // New problem added
+  {
+    id: '21',
+    title: 'DOM Manipulation',
+    slug: 'dom-manipulation',
+    difficulty: 'Medium',
+    category: 'Web Development',
+    categoryEmoji: '🌐',
+    description: 'Implement a function `createTodoList()` that manipulates the DOM to create a simple todo list application.\n\nYour function should:\n\n1. Create a form with an input field and a submit button\n2. Create an empty unordered list (ul) element for the todos\n3. When the form is submitted, add the input value as a new list item (li) to the todo list\n4. Clear the input field after adding the todo\n5. Add a "delete" button to each todo item that removes it from the list when clicked\n\nReturn the container element that holds both the form and the todo list.',
+    examples: [
+      {
+        input: 'document.body.appendChild(createTodoList())',
+        output: 'A todo list application appears on the page',
+        explanation: 'When called, the function creates a todo list UI with add and delete functionality'
+      }
+    ],
+    constraints: [
+      'Use vanilla JavaScript (no libraries or frameworks)',
+      'Ensure the form does not trigger a page reload when submitted',
+      'Do not allow empty todos to be added'
+    ],
+    hints: [
+      'Use document.createElement() to create DOM elements',
+      'Use the addEventListener() method to handle events like form submission',
+      'Remember to prevent the default form submission behavior with event.preventDefault()',
+      'For the delete functionality, you can use parentNode to find and remove the parent li element'
+    ],
+    solution: {
+      explanation: 'We create a DOM structure for a simple todo list application using JavaScript. We handle form submission to add new todos and add delete buttons to each todo item. We use event listeners to handle user interactions.',
+      code: `function createTodoList() {
+    // Create container
+    const container = document.createElement('div');
+    container.className = 'todo-app';
+
+    // Create form
+    const form = document.createElement('form');
+    const input = document.createElement('input');
+    const submitButton = document.createElement('button');
+
+    input.type = 'text';
+    input.placeholder = 'Add a new todo';
+    input.required = true;
+
+    submitButton.textContent = 'Add';
+    submitButton.type = 'submit';
+
+    form.appendChild(input);
+    form.appendChild(submitButton);
+
+    // Create todo list
+    const todoList = document.createElement('ul');
+    todoList.className = 'todo-list';
+
+    // Handle form submission
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const todoText = input.value.trim();
+        if (todoText) {
+            // Create new todo item
+            const todoItem = document.createElement('li');
+            todoItem.textContent = todoText;
+
+            // Create delete button
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.className = 'delete-btn';
+
+            // Handle delete
+            deleteButton.addEventListener('click', function() {
+                todoList.removeChild(todoItem);
+            });
+
+            todoItem.appendChild(deleteButton);
+            todoList.appendChild(todoItem);
+
+            // Clear input
+            input.value = '';
+        }
+    });
+
+    // Add elements to container
+    container.appendChild(form);
+    container.appendChild(todoList);
+
+    return container;
+}
+
+// Example usage:
+// document.body.appendChild(createTodoList());`
+    }
+  },
+
+  // New problem added
+  {
+    id: '22',
+    title: 'API Data Fetching',
+    slug: 'api-data-fetching',
+    difficulty: 'Medium',
+    category: 'Web Development',
+    categoryEmoji: '🌐',
+    description: 'Implement a function `fetchUserData(userId)` that fetches user data from a JSON API and displays it on a webpage.\n\nThe function should:\n\n1. Fetch user data from the JSONPlaceholder API: https://jsonplaceholder.typicode.com/users/{userId}\n2. Display the user\'s name, email, phone, and website in a formatted card\n3. Handle loading states while the data is being fetched\n4. Handle errors if the API request fails\n5. Return the card element containing the user data',
+    examples: [
+      {
+        input: 'document.body.appendChild(fetchUserData(1))',
+        output: 'A card displays with the data for user with ID 1',
+        explanation: 'The function fetches data for user with ID 1 and displays it in a card'
+      }
+    ],
+    constraints: [
+      'Use the Fetch API for making the HTTP request',
+      'Handle API errors appropriately',
+      'Display a loading indicator while fetching data',
+      'The function should work asynchronously'
+    ],
+    hints: [
+      'Use the fetch() function to make HTTP requests',
+      'API responses need to be converted to JSON using the .json() method',
+      'You can use Promises or async/await for handling asynchronous operations',
+      'Create and update DOM elements to show loading states and results'
+    ],
+    solution: {
+      explanation: 'We implement a function that fetches user data from the JSONPlaceholder API and displays it in a card. We handle loading states and errors, and use the Fetch API with async/await for the HTTP request.',
+      code: `async function fetchUserData(userId) {
+    // Create card container
+    const card = document.createElement('div');
+    card.className = 'user-card';
+
+    // Set initial loading state
+    card.innerHTML = '<p>Loading user data...</p>';
+
+    try {
+        // Fetch user data
+        const response = await fetch(\`https://jsonplaceholder.typicode.com/users/\${userId}\`);
+
+        // Check if request was successful
+        if (!response.ok) {
+            throw new Error(\`HTTP error! Status: \${response.status}\`);
+        }
+
+        // Parse JSON response
+        const userData = await response.json();
+
+        // Update card with user data
+        card.innerHTML = \`
+            <h2>\${userData.name}</h2>
+            <p><strong>Email:</strong> \${userData.email}</p>
+            <p><strong>Phone:</strong> \${userData.phone}</p>
+            <p><strong>Website:</strong> \${userData.website}</p>
+        \`;
+
+    } catch (error) {
+        // Handle errors
+        card.innerHTML = \`
+            <p class="error">Error fetching user data: \${error.message}</p>
+        \`;
+    }
+
+    return card;
+}
+
+// Example usage:
+// async function displayUser() {
+//     const userCard = await fetchUserData(1);
+//     document.body.appendChild(userCard);
+// }
+// displayUser();`
+    }
+  },
+
+  // ... existing code ... <end of file>
 ];
 
 // Function to get all problems organized by category
