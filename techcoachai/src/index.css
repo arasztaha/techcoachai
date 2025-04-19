@@ -167,3 +167,12 @@ body {
   background-color: #1e1e1e;
   color: #d4d4d4;
 }
+
+/* Fix for CodeMirror editor to fill available height */
+.flex-1 .cm-editor {
+  height: 100%;
+}
+
+.flex-1 .cm-scroller {
+  overflow: auto;
+}

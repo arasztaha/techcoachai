@@ -96,7 +96,7 @@ solution()
         </Link>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-6">
+      <div className="flex flex-col lg:flex-row gap-6 min-h-[600px]">
         {/* Problem description panel */}
         <div className="lg:w-1/2 lg:max-w-xl">
           <div className={`p-6 rounded-lg border ${darkMode ? 'bg-zinc-800/50 border-zinc-700' : 'bg-white border-gray-200'}`}>
@@ -193,7 +193,7 @@ solution()
 
         {/* Code editor panel */}
         <div className="lg:w-1/2 flex-1">
-          <div className={`p-6 rounded-lg border h-full ${darkMode ? 'bg-zinc-800/50 border-zinc-700' : 'bg-white border-gray-200'}`}>
+          <div className={`p-6 rounded-lg border h-full ${darkMode ? 'bg-zinc-800/50 border-zinc-700' : 'bg-white border-gray-200'}`} style={{ minHeight: "600px" }}>
             <CodeEditor initialCode={initialCode} problemId={problem.id} />
           </div>
         </div>

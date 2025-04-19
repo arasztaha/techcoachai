@@ -704,7 +704,7 @@ print(test_output)
       <div className="flex-1 border border-gray-300 dark:border-zinc-700 rounded-md overflow-hidden mb-4">
         <CodeMirror
           value={code}
-          height="350px"
+          height="100%"
           theme={darkMode ? oneDark : 'light'}
           extensions={[python()]}
           onChange={handleCodeChange}
