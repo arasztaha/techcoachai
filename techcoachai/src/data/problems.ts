@@ -690,6 +690,592 @@ print(stack.pop())       # 2
 print(stack.size())      # 1
 print(stack.is_empty())  # False`
     }
+  },
+  {
+    id: '13',
+    title: 'Implement a Queue',
+    slug: 'implement-a-queue',
+    difficulty: 'Medium',
+    category: 'Data Structures',
+    categoryEmoji: '🧱',
+    description: 'Implement a queue data structure in Python.\\n\\nA queue is a First-In-First-Out (FIFO) data structure with the following operations:\\n- `enqueue(item)`: Add an item to the end of the queue\\n- `dequeue()`: Remove and return the front item from the queue\\n- `peek()`: Return the front item without removing it\\n- `is_empty()`: Return True if the queue is empty, False otherwise\\n- `size()`: Return the number of items in the queue',
+    examples: [
+      {
+        input: `queue = Queue()
+queue.enqueue(1)
+queue.enqueue(2)
+queue.enqueue(3)
+queue.dequeue()`,
+        output: '1',
+        explanation: 'The first item added (1) is the first to be dequeued'
+      },
+      {
+        input: `queue = Queue()
+queue.enqueue("a")
+queue.enqueue("b")
+queue.peek()`,
+        output: '"a"',
+        explanation: 'Peek returns the front item ("a") without removing it'
+      }
+    ],
+    constraints: [
+      'Implement the queue using a Python list',
+      'All operations should have appropriate time complexity'
+    ],
+    hints: [
+      'For a queue, items are added at one end and removed from the other',
+      'Be careful about how you implement dequeue to maintain O(1) complexity',
+      'You can use list.pop(0) to remove the first element, but this is O(n)'
+    ],
+    solution: {
+      explanation: 'We can implement a queue using a Python list. Items are enqueued at the end of the list and dequeued from the beginning. While pop(0) is O(n), it is suitable for most practical purposes. For more efficient implementations, you could use collections.deque.',
+      code: `class Queue:
+    def __init__(self):
+        """Initialize an empty queue."""
+        self.items = []
+
+    def enqueue(self, item):
+        """Add an item to the end of the queue."""
+        self.items.append(item)
+
+    def dequeue(self):
+        """Remove and return the front item from the queue.
+        Raises IndexError if the queue is empty."""
+        if self.is_empty():
+            raise IndexError("Cannot dequeue from an empty queue")
+        return self.items.pop(0)
+
+    def peek(self):
+        """Return the front item without removing it.
+        Raises IndexError if the queue is empty."""
+        if self.is_empty():
+            raise IndexError("Cannot peek at an empty queue")
+        return self.items[0]
+
+    def is_empty(self):
+        """Return True if the queue is empty, False otherwise."""
+        return len(self.items) == 0
+
+    def size(self):
+        """Return the number of items in the queue."""
+        return len(self.items)
+
+# Test cases
+queue = Queue()
+print(queue.is_empty())  # True
+
+queue.enqueue(1)
+queue.enqueue(2)
+queue.enqueue(3)
+
+print(queue.size())      # 3
+print(queue.peek())      # 1
+print(queue.dequeue())   # 1
+print(queue.dequeue())   # 2
+print(queue.size())      # 1
+print(queue.is_empty())  # False`
+    }
+  },
+  {
+    id: '14',
+    title: 'Binary Search Tree Operations',
+    slug: 'binary-search-tree-operations',
+    difficulty: 'Hard',
+    category: 'Data Structures',
+    categoryEmoji: '🧱',
+    description: 'Implement a Binary Search Tree (BST) in Python.\\n\\nA Binary Search Tree is a data structure where each node has at most two children, and all values in the left subtree are less than the node\'s value, while all values in the right subtree are greater.\\n\\nImplement the following operations:\\n- `insert(value)`: Insert a value into the BST\\n- `search(value)`: Return True if the value exists in the BST, False otherwise\\n- `inorder_traversal()`: Return a list of all values in the BST using inorder traversal (left, root, right)\\n- `min_value()`: Return the minimum value in the BST\\n- `max_value()`: Return the maximum value in the BST',
+    examples: [
+      {
+        input: `bst = BinarySearchTree()
+bst.insert(5)
+bst.insert(3)
+bst.insert(7)
+bst.insert(2)
+bst.insert(4)
+bst.inorder_traversal()`,
+        output: '[2, 3, 4, 5, 7]',
+        explanation: 'Inorder traversal visits nodes in ascending order in a BST'
+      },
+      {
+        input: `bst = BinarySearchTree()
+bst.insert(10)
+bst.insert(5)
+bst.insert(15)
+bst.search(5)`,
+        output: 'True',
+        explanation: '5 exists in the BST'
+      },
+      {
+        input: `bst = BinarySearchTree()
+bst.insert(10)
+bst.insert(5)
+bst.insert(15)
+bst.min_value()`,
+        output: '5',
+        explanation: 'The minimum value in the BST is 5'
+      }
+    ],
+    constraints: [
+      'All values in the BST will be unique',
+      'The BST should handle empty trees appropriately'
+    ],
+    hints: [
+      'Create a Node class to represent each node in the tree',
+      'For insert, start at the root and move left or right based on comparisons',
+      'For inorder traversal, use recursive approach: traverse left, visit node, traverse right',
+      'The minimum value will always be the leftmost node',
+      'The maximum value will always be the rightmost node'
+    ],
+    solution: {
+      explanation: 'We implement a Binary Search Tree with a Node class for each node in the tree. Each node has a value and left and right children. The insert method adds new nodes while maintaining the BST property. The search method looks for a value by traversing the tree. Inorder traversal visits nodes in ascending order. The min_value and max_value methods find the minimum and maximum values in the tree.',
+      code: `class Node:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+class BinarySearchTree:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, value):
+        if self.root is None:
+            self.root = Node(value)
+        else:
+            self._insert_recursive(self.root, value)
+
+    def _insert_recursive(self, node, value):
+        if value < node.value:
+            if node.left is None:
+                node.left = Node(value)
+            else:
+                self._insert_recursive(node.left, value)
+        else:
+            if node.right is None:
+                node.right = Node(value)
+            else:
+                self._insert_recursive(node.right, value)
+
+    def search(self, value):
+        return self._search_recursive(self.root, value)
+
+    def _search_recursive(self, node, value):
+        if node is None:
+            return False
+        if node.value == value:
+            return True
+        if value < node.value:
+            return self._search_recursive(node.left, value)
+        return self._search_recursive(node.right, value)
+
+    def inorder_traversal(self):
+        result = []
+        self._inorder_recursive(self.root, result)
+        return result
+
+    def _inorder_recursive(self, node, result):
+        if node:
+            self._inorder_recursive(node.left, result)
+            result.append(node.value)
+            self._inorder_recursive(node.right, result)
+
+    def min_value(self):
+        if self.root is None:
+            return None
+        return self._find_min(self.root).value
+
+    def _find_min(self, node):
+        current = node
+        while current.left is not None:
+            current = current.left
+        return current
+
+    def max_value(self):
+        if self.root is None:
+            return None
+        return self._find_max(self.root).value
+
+    def _find_max(self, node):
+        current = node
+        while current.right is not None:
+            current = current.right
+        return current
+
+# Test cases
+bst = BinarySearchTree()
+bst.insert(5)
+bst.insert(3)
+bst.insert(7)
+bst.insert(2)
+bst.insert(4)
+print(bst.inorder_traversal())  # [2, 3, 4, 5, 7]
+print(bst.search(4))            # True
+print(bst.search(6))            # False
+print(bst.min_value())          # 2
+print(bst.max_value())          # 7`
+    }
+  },
+  {
+    id: '15',
+    title: 'Linked List Implementation',
+    slug: 'linked-list-implementation',
+    difficulty: 'Medium',
+    category: 'Data Structures',
+    categoryEmoji: '🧱',
+    description: 'Implement a singly linked list in Python.\\n\\nA linked list is a data structure consisting of nodes where each node contains a value and a pointer to the next node.\\n\\nImplement the following operations:\\n- `append(value)`: Add a node with the given value to the end of the list\\n- `prepend(value)`: Add a node with the given value to the beginning of the list\\n- `delete(value)`: Remove the first node with the given value\\n- `search(value)`: Return True if the value exists in the list, False otherwise\\n- `to_list()`: Convert the linked list to a Python list',
+    examples: [
+      {
+        input: `linked_list = LinkedList()
+linked_list.append(1)
+linked_list.append(2)
+linked_list.append(3)
+linked_list.to_list()`,
+        output: '[1, 2, 3]',
+        explanation: 'The linked list contains the values 1, 2, and 3 in order'
+      },
+      {
+        input: `linked_list = LinkedList()
+linked_list.append(2)
+linked_list.prepend(1)
+linked_list.append(3)
+linked_list.to_list()`,
+        output: '[1, 2, 3]',
+        explanation: 'The linked list contains 1 at the beginning, then 2, then 3'
+      },
+      {
+        input: `linked_list = LinkedList()
+linked_list.append(1)
+linked_list.append(2)
+linked_list.append(3)
+linked_list.delete(2)
+linked_list.to_list()`,
+        output: '[1, 3]',
+        explanation: 'After deleting 2, the list contains only 1 and 3'
+      }
+    ],
+    constraints: [
+      'All operations should have appropriate time complexity',
+      'The linked list should handle empty lists appropriately'
+    ],
+    hints: [
+      'Create a Node class to represent each node in the list',
+      'Keep track of the head of the list in the LinkedList class',
+      'For append, you may want to also track the tail of the list for O(1) insertion',
+      'For delete, you need to handle special cases like deleting the head'
+    ],
+    solution: {
+      explanation: 'We implement a singly linked list with a Node class for each node in the list. The LinkedList class keeps track of the head and tail of the list. The append operation adds a node to the end of the list, prepend adds a node to the beginning, delete removes a node with a given value, search checks if a value exists in the list, and to_list converts the linked list to a Python list.',
+      code: `class Node:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+
+    def append(self, value):
+        new_node = Node(value)
+        if self.head is None:
+            self.head = new_node
+            self.tail = new_node
+        else:
+            self.tail.next = new_node
+            self.tail = new_node
+
+    def prepend(self, value):
+        new_node = Node(value)
+        if self.head is None:
+            self.head = new_node
+            self.tail = new_node
+        else:
+            new_node.next = self.head
+            self.head = new_node
+
+    def delete(self, value):
+        if self.head is None:
+            return
+
+        # If head node holds the value to be deleted
+        if self.head.value == value:
+            self.head = self.head.next
+            # If the list becomes empty, update tail
+            if self.head is None:
+                self.tail = None
+            return
+
+        # Search for the value to delete, keep track of previous node
+        current = self.head
+        while current.next and current.next.value != value:
+            current = current.next
+
+        # If the value was found, delete it
+        if current.next:
+            # If we're deleting the tail, update tail pointer
+            if current.next == self.tail:
+                self.tail = current
+            current.next = current.next.next
+
+    def search(self, value):
+        current = self.head
+        while current:
+            if current.value == value:
+                return True
+            current = current.next
+        return False
+
+    def to_list(self):
+        result = []
+        current = self.head
+        while current:
+            result.append(current.value)
+            current = current.next
+        return result
+
+# Test cases
+linked_list = LinkedList()
+linked_list.append(1)
+linked_list.append(2)
+linked_list.append(3)
+print(linked_list.to_list())  # [1, 2, 3]
+print(linked_list.search(2))  # True
+print(linked_list.search(4))  # False
+
+linked_list.prepend(0)
+print(linked_list.to_list())  # [0, 1, 2, 3]
+
+linked_list.delete(0)
+linked_list.delete(2)
+print(linked_list.to_list())  # [1, 3]`
+    }
+  },
+
+  // Python Advanced
+  {
+    id: '16',
+    title: 'Decorators in Python',
+    slug: 'decorators-in-python',
+    difficulty: 'Hard',
+    category: 'Python Advanced',
+    categoryEmoji: '🐍',
+    description: 'Implement several Python decorators to understand this powerful feature.\\n\\nA decorator is a function that takes another function as an argument and extends its behavior without explicitly modifying it.\\n\\nImplement the following decorators:\\n- `timer`: Measure and print the execution time of a function\\n- `debug`: Print the function name, arguments, and return value\\n- `retry(n)`: Retry the function execution up to n times if it raises an exception',
+    examples: [
+      {
+        input: `@timer
+def slow_function():
+    import time
+    time.sleep(1)
+    return "Done"
+
+slow_function()`,
+        output: 'Execution of slow_function took about 1 second\n"Done"',
+        explanation: 'The timer decorator measures how long the function takes to execute'
+      },
+      {
+        input: `@debug
+def add(a, b):
+    return a + b
+
+add(3, 5)`,
+        output: 'Calling add(3, 5)\nReturning 8\n8',
+        explanation: 'The debug decorator prints information about the function call'
+      },
+      {
+        input: `@retry(3)
+def might_fail(probability=0.5):
+    import random
+    if random.random() < probability:
+        raise ValueError("Random failure")
+    return "Success"`,
+        output: 'Various depending on randomness, but will retry up to 3 times',
+        explanation: 'The retry decorator attempts to execute the function up to 3 times if it raises an exception'
+      }
+    ],
+    constraints: [
+      'Ensure your decorators work with functions of any signature',
+      'Make sure your decorators properly return the original function\'s return value'
+    ],
+    hints: [
+      'Use functools.wraps to preserve the original function\'s metadata',
+      'For the timer decorator, use time.time() to measure elapsed time',
+      'For the retry decorator, you\'ll need to create a decorator that takes an argument'
+    ],
+    solution: {
+      explanation: 'We implement three decorators: timer, debug, and retry. The timer decorator measures the execution time of a function. The debug decorator prints information about the function call including arguments and return value. The retry decorator retries the function execution up to n times if it raises an exception.',
+      code: `import functools
+import time
+
+def timer(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        print(f"Execution of {func.__name__} took {end_time - start_time:.2f} seconds")
+        return result
+    return wrapper
+
+def debug(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        args_repr = [repr(a) for a in args]
+        kwargs_repr = [f"{k}={v!r}" for k, v in kwargs.items()]
+        signature = ", ".join(args_repr + kwargs_repr)
+        print(f"Calling {func.__name__}({signature})")
+        result = func(*args, **kwargs)
+        print(f"Returning {result!r}")
+        return result
+    return wrapper
+
+def retry(n):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            for attempt in range(1, n + 1):
+                try:
+                    return func(*args, **kwargs)
+                except Exception as e:
+                    print(f"Attempt {attempt}/{n} failed: {e}")
+                    if attempt == n:
+                        raise
+        return wrapper
+    return decorator
+
+# Example usage:
+@timer
+def slow_function():
+    time.sleep(1)
+    return "Done"
+
+@debug
+def add(a, b):
+    return a + b
+
+@retry(3)
+def might_fail(probability=0.7):
+    import random
+    if random.random() < probability:
+        raise ValueError("Random failure")
+    return "Success"
+
+# Test cases
+print(slow_function())
+print(add(3, 5))
+try:
+    print(might_fail())
+except Exception as e:
+    print(f"Function failed all retries: {e}")`
+    }
+  },
+  {
+    id: '17',
+    title: 'Context Managers and the with Statement',
+    slug: 'context-managers-and-with-statement',
+    difficulty: 'Hard',
+    category: 'Python Advanced',
+    categoryEmoji: '🐍',
+    description: 'Create custom context managers in Python using both class-based and function-based approaches.\\n\\nA context manager is an object that defines the methods `__enter__()` and `__exit__()` and can be used with the `with` statement. Context managers are useful for resource management and for creating reusable setup and teardown code.\\n\\nImplement the following context managers:\\n- `Timer`: A class-based context manager that measures the execution time of code\\n- `tempdir`: A function-based context manager (using the `@contextmanager` decorator) that creates a temporary directory, yields its path, and deletes it afterward\\n- `suppress_exceptions`: A context manager that suppresses specified exceptions',
+    examples: [
+      {
+        input: `with Timer() as timer:
+    # Code to be timed
+    import time
+    time.sleep(1)
+print(f"Elapsed time: {timer.elapsed} seconds")`,
+        output: 'Elapsed time: ~1.0 seconds',
+        explanation: 'The Timer context manager measures the execution time of the code within the with block'
+      },
+      {
+        input: `with tempdir() as path:
+    # Code that uses the temporary directory
+    print(f"Working in {path}")
+    with open(f"{path}/example.txt", "w") as f:
+        f.write("Hello, world!")`,
+        output: 'Working in /tmp/some_temp_dir\n# The directory is automatically cleaned up after the with block',
+        explanation: 'The tempdir context manager creates a temporary directory, yields its path, and deletes it afterward'
+      },
+      {
+        input: `with suppress_exceptions(ZeroDivisionError):
+    result = 1 / 0
+print("Execution continues despite the zero division error")`,
+        output: 'Execution continues despite the zero division error',
+        explanation: 'The suppress_exceptions context manager suppresses the specified exception(s)'
+      }
+    ],
+    constraints: [
+      'Your context managers should clean up resources properly even if an exception occurs',
+      'Make sure to handle edge cases and provide meaningful error messages when appropriate'
+    ],
+    hints: [
+      'For class-based context managers, implement the __enter__ and __exit__ methods',
+      'For function-based context managers, use the contextlib.contextmanager decorator',
+      'The __exit__ method takes three arguments: exception_type, exception_value, and traceback',
+      'The tempdir manager can use the tempfile module from the standard library'
+    ],
+    solution: {
+      explanation: 'We implement three custom context managers: Timer (class-based), tempdir (function-based), and suppress_exceptions (class-based). The Timer context manager measures the execution time of code within a with block. The tempdir context manager creates a temporary directory, yields its path, and cleans it up afterward. The suppress_exceptions context manager suppresses specified exceptions.',
+      code: `import time
+import os
+import shutil
+import tempfile
+from contextlib import contextmanager
+
+# Class-based context manager
+class Timer:
+    def __enter__(self):
+        self.start = time.time()
+        self.elapsed = None
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.elapsed = time.time() - self.start
+
+# Function-based context manager using @contextmanager
+@contextmanager
+def tempdir():
+    """
+    Create a temporary directory, yield its path, and delete it afterward.
+    """
+    path = tempfile.mkdtemp()
+    try:
+        yield path
+    finally:
+        shutil.rmtree(path)
+
+# Class-based context manager for exception suppression
+class suppress_exceptions:
+    def __init__(self, *exceptions):
+        self.exceptions = exceptions
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        # Return True to suppress the exception if it's in the specified list
+        return exc_type is not None and issubclass(exc_type, self.exceptions)
+
+# Example usage:
+# Timer example
+with Timer() as timer:
+    # Code to be timed
+    time.sleep(0.5)
+print(f"Elapsed time: {timer.elapsed:.2f} seconds")
+
+# Tempdir example
+with tempdir() as path:
+    print(f"Working in temporary directory: {path}")
+    # Create a file in the temp directory
+    with open(os.path.join(path, "example.txt"), "w") as f:
+        f.write("Hello, world!")
+    # The directory and its contents are automatically removed after this block
+
+# Exception suppression example
+with suppress_exceptions(ZeroDivisionError, ValueError):
+    # This would normally raise an exception and stop execution
+    result = 1 / 0
+print("Execution continues despite the zero division error")`
+    }
   }
 ];
 
